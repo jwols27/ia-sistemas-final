@@ -19,6 +19,7 @@
 		"@sveltejs/adapter-auto": "^7.0.0",
 		"@sveltejs/kit": "^2.48.5",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
+		"@types/better-sqlite3": "^7.6.13",
 		"@types/node": "^24",
 		"eslint": "^9.39.1",
 		"eslint-config-prettier": "^10.1.8",
@@ -34,6 +35,9 @@
 	},
 	"dependencies": {
 		"@ai-sdk/google": "^2.0.44",
-		"ai": "^5.0.104"
+		"@ai-sdk/svelte": "^3.0.104",
+		"@lucide/svelte": "^0.555.0",
+		"ai": "^5.0.104",
+		"better-sqlite3": "^12.5.0"
 	}
 }
