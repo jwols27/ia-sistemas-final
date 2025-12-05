@@ -1,18 +1,20 @@
 <script lang="ts">
 	import '../app.css';
+	import { onMount } from 'svelte';
 	import { PlusIcon, Trash2Icon } from '@lucide/svelte';
 	import { getChatId, setChatId, newChatId } from '$lib';
-	import { onMount } from 'svelte';
 
 	let { children, data } = $props();
 
 	let currentChatId = $state('');
 
+	/** Cria um novo chat */
 	function handleNewChat() {
 		newChatId();
 		window.location.reload();
 	}
 
+	/** Troca de chat */
 	async function handleSwitchChat(chatId: string) {
 		const id = getChatId();
 		if (id === chatId) return;
@@ -21,6 +23,7 @@
 		window.location.reload();
 	}
 
+	/** Apaga o chat especificado */
 	async function handleDeleteChat(chatId: string) {
 		if (!confirm('Certeza que quer apagar essa conversa?')) return;
 		await fetch(`/api/chat?chatId=${chatId}`, {

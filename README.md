@@ -2,14 +2,16 @@
 
 Esse projeto visa criar um chatbot baseado no dataset do curso de Engenharia de Computação da Unoesc.
 
+O projeto foi feito com SvelteKit + SDK AI da Vercel, utilizando o `Gemini 2.5 Pro` como LLM.
+
 ---
 
 **Professor:** Jacson Luiz Matte
 
 **Alunas:**
 
-- Ana Paula Rampanelli (404334)
-- Júlia Patricia Wolschick (404691)
+- Ana Paula Rampanelli (404334) - **Engenheira de dados e de IA**
+- Júlia Patricia Wolschick (404691) - **Engenheira de backend e de IA**, **desenvolvedora de interface**
 
 ---
 
@@ -70,4 +72,5 @@ Nessa semana eu finalizei os projetos de frontend e backend. Parei de usar a sol
 refiz a partir de streaming de texto. Implementei o banco, o visual, e deixei a conversa mais fluida. Agora é
 possível ter mais de um chat também!
 
-Para finalizar, comentei os trechos relevantes do código como pedido.
+Foram feitas algumas últimas alterações na personalidade da IA e adicionei comentários nos trechos relevantes
+do código, como pedido.

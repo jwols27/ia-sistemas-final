@@ -1,10 +1,7 @@
 import Database from 'better-sqlite3';
-import { dev } from '$app/environment';
 import type { ModelMessage } from 'ai';
 
-const db = new Database(dev ? 'chat.db' : 'chat.db', {
-    verbose: dev ? console.log : undefined
-});
+const db = new Database('chat.db');
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS chats (

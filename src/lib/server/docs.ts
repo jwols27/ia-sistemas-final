@@ -2,6 +2,7 @@ import type { ModelMessage } from 'ai';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
+/** Carrega o conhecimento e a personalidade do bot */
 export function loadDocs(): ModelMessage[] {
     const docsPath = join(process.cwd(), 'static', 'docs');
 

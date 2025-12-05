@@ -5,13 +5,27 @@
 	import { invalidateAll } from '$app/navigation';
 	import { Disc3Icon, SendHorizontalIcon } from '@lucide/svelte';
 
+	/** Texto recebido da LLM */
 	let stream = '';
+	/** Campo de prompt */
 	let input = $state('');
+	/** Se o servidor ainda está streamando conteúdo */
 	let streaming = $state(false);
+
 	let chat: ModelMessage[] = $state([]);
 
-	let revealedLength = 0;
+	/**
+	 * O `revealTimer` serve para deixar a mensagem da LLM mais lisa,
+	 * exibindo ela de forma mais suave ao invés de grandes pedaços de texto
+	 *
+	 * Enquanto ele estiver rodando, ele vai incrementar letra por letra a
+	 * mensagem da LLM, mesmo que já tenha recebido tudo.
+	 *
+	 * A exibição é pausada quando chegar ao fim do pedaço da resposta guardado
+	 * no `stream`, mas reinicia ao receber mais texto.
+	 */
 	let revealTimer: ReturnType<typeof setInterval> | null = null;
+	let revealedLength = 0;
 
 	function stopTimer() {
 		if (!revealTimer) return;
@@ -19,6 +33,7 @@
 		revealTimer = null;
 	}
 
+	/** Faz scroll até o fim da conversa */
 	function scrollToBottom(behavior: 'smooth' | 'instant') {
 		tick().then(() => {
 			const element = document.querySelector('.messages');
@@ -31,15 +46,20 @@
 
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
+
 		const prompt = input;
 		const chatId = getChatId();
 		input = '';
+
+		/** Adiciona a mensagem do usuário e uma mensagem de carregamento na interface*/
 		chat = [...chat, { role: 'user', content: prompt }, { role: 'assistant', content: '' }];
 		scrollToBottom('smooth');
 
 		stream = '';
 		streaming = true;
 		revealedLength = 0;
+
+		/** Faz o prompt, enviando a pergunta e o ID do chat */
 		const res = await fetch('/api/chat', {
 			method: 'POST',
 			body: JSON.stringify({ prompt, chatId })
@@ -51,7 +71,7 @@
 
 		const reader = res.body?.getReader();
 		if (!reader) {
-			throw new Error('No readable stream in response');
+			throw new Error('Nenhuma resposta encontrada');
 		}
 
 		const decoder = new TextDecoder();
@@ -59,6 +79,7 @@
 			const { done, value } = await reader.read();
 			if (done) break;
 
+			/** Recebe uma parte da resposta da LLM e guarda */
 			const chunk = decoder.decode(value, { stream: true });
 			stream += chunk;
 
@@ -75,9 +96,12 @@
 			}
 		}
 		streaming = false;
+
+		/** Recarrega os dados do servidor */
 		await invalidateAll();
 	}
 
+	/** Carrega as mensagens de um chat existente */
 	onMount(async () => {
 		const response = await fetch(`/api/chat?chatId=${getChatId()}`, { method: 'GET' });
 		const data = await response.json();
