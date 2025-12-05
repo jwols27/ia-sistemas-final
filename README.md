@@ -1,4 +1,4 @@
-# Projeto final de Cyber Security
+# Projeto final de Inteligência Artificial e Sistemas Inteligentes
 
 Esse projeto visa criar um chatbot baseado no dataset do curso de Engenharia de Computação da Unoesc.
 

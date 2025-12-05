@@ -50,8 +50,7 @@ export function getChat(chatId: string): Chat | null {
 
 export function getAllChats(): Omit<Chat, "messages">[] {
     const stmt = db.prepare(`
-        SELECT name, chat_id, created_at, updated_at
-        FROM chats ORDER BY updated_at DESC
+        SELECT * FROM chats ORDER BY updated_at DESC
     `);
     const rows = stmt.all() as any[];
 
