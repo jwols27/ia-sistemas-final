@@ -24,11 +24,11 @@ export interface Chat {
 
 export function saveChat(chatId: string, messages: ModelMessage[]) {
     const stmt = db.prepare(`
-    INSERT INTO chats (chat_id, messages, updated_at) 
-    VALUES (?, ?, CURRENT_TIMESTAMP)
-    ON CONFLICT(chat_id) 
-    DO UPDATE SET messages = ?, updated_at = CURRENT_TIMESTAMP
-  `);
+        INSERT INTO chats (chat_id, messages, updated_at) 
+        VALUES (?, ?, CURRENT_TIMESTAMP)
+        ON CONFLICT(chat_id) 
+        DO UPDATE SET messages = ?, updated_at = CURRENT_TIMESTAMP
+    `);
     const messagesJson = JSON.stringify(messages);
     return stmt.run(chatId, messagesJson, messagesJson);
 }
@@ -52,7 +52,10 @@ export function getChat(chatId: string): Chat | null {
 }
 
 export function getAllChats(): Omit<Chat, "messages">[] {
-    const stmt = db.prepare('SELECT * FROM chats ORDER BY updated_at DESC');
+    const stmt = db.prepare(`
+        SELECT name, chat_id, created_at, updated_at
+        FROM chats ORDER BY updated_at DESC
+    `);
     const rows = stmt.all() as any[];
 
     return rows.map(row => ({

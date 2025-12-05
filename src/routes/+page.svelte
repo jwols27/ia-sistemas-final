@@ -167,14 +167,28 @@
 		justify-content: center;
 	}
 
-	input {
+	form > input {
 		flex: 1;
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 	}
 
-	input:focus + button {
+	form > input:focus + button {
 		border-color: #c6a0f6;
+	}
+
+	button {
+		padding: 0.5em 1em;
+		border-radius: 14px;
+		border: 1px solid currentColor;
+	}
+
+	button:hover {
+		background-color: #363a4f;
+	}
+
+	button:active {
+		color: #c6a0f6;
 	}
 
 	button {
