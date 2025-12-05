@@ -130,7 +130,11 @@
 	{/if}
 
 	<form onsubmit={handleSubmit}>
-		<input style:max-width={chat.length ? 'unset' : '50%'} bind:value={input} />
+		<input
+			style:max-width={chat.length ? 'unset' : '50%'}
+			bind:value={input}
+			placeholder="Pergunte alguma coisa"
+		/>
 		<button disabled={!input.length} type="submit"
 			><SendHorizontalIcon id="send-button-icon" /></button
 		>
